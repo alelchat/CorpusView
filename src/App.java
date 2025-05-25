@@ -20,7 +20,11 @@ public class App extends Application {
         // Statistiques
         StatisticsDisplay stats = new StatisticsDisplay(
             mainView.getLevensteinLabel(), 
-            mainView.getCommonWordsLabel()
+            mainView.getCommonWordsLabel(),
+            leftModel,
+            rightModel,
+            mainView.getLeftPanel(),
+            mainView.getRightPanel()
         );
         leftModel.addObserver(stats);
         rightModel.addObserver(stats);

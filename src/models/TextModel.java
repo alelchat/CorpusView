@@ -40,7 +40,7 @@ public class TextModel {
         observers.add(o);
     }
 
-    private void notifyObservers() {
+    public void notifyObservers() {
         for (Observer o : observers) {
             o.update(this);
         }

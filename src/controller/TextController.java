@@ -33,6 +33,19 @@ public class TextController {
                     view.getChapterSelect().getSelectionModel().select(firstChapter);
                     view.getTextArea().setText(chapters.get(firstChapter)); // Affiche uniquement le chapitre
                 }
+                model.notifyObservers();
+            }
+        });
+
+        view.getEditBtn().setOnAction(e -> {
+            boolean edition = view.getEditBtn().isSelected();
+            view.getTextArea().setEditable(edition);  // rend le champ modifiable (true) ou lecture seule (false):contentReference[oaicite:1]{index=1} 
+
+            if(edition) {
+                view.getEditBtn().setText("Enregistrer");
+            } else {
+                view.getEditBtn().setText("Modifier");
+                model.notifyObservers();
             }
         });
 
@@ -100,20 +113,20 @@ public class TextController {
             }
         });
 
-        view.getTextArea().textProperty().addListener((obs, oldText, newText) -> {
-            if (view.getEditBtn().isSelected()) {
-                String selectedChapter = view.getChapterSelect().getValue();
-                if (selectedChapter != null) {
-                    model.getChapters().put(selectedChapter, newText);
-                }
-            }
-        });
-
         // Gérer le changement de chapitre
         view.getChapterSelect().setOnAction(e -> {
             String selectedChapter = view.getChapterSelect().getValue();
             if (selectedChapter != null && !selectedChapter.isEmpty()) {
                 view.getTextArea().setText(model.getChapters().get(selectedChapter));
+                model.notifyObservers();
+            }
+        });
+
+        view.getTextArea().textProperty().addListener((obs, oldVal, newVal) -> {
+            String selectedChapter = view.getChapterSelect().getValue();
+            if (selectedChapter != null) {
+                model.getChapters().put(selectedChapter, newVal);
+                //model.notifyObservers();
             }
         });
     }
