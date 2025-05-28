@@ -1,9 +1,8 @@
 // Fichier : src/views/StatisticsDisplay.java
 package views;
 
-import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
+import utils.TextUtils; // Importer la classe utilitaire pour extraire les mots
 
 import javafx.scene.control.Label;
 import models.TextModel;
@@ -38,8 +37,8 @@ public class StatisticsDisplay implements Observer {
         String rightText = getSelectedChapterText(rightModel, rightView);
 
         // Calculer les mots communs
-        Set<String> leftWords = extractWords(leftText);
-        Set<String> rightWords = extractWords(rightText);
+        Set<String> leftWords = TextUtils.extractWords(leftText);
+        Set<String> rightWords = TextUtils.extractWords(rightText);
         leftWords.retainAll(rightWords);
         commonWordsLabel.setText("Mots en commun : " + leftWords.size());
 
@@ -68,22 +67,5 @@ public class StatisticsDisplay implements Observer {
             dp = temp;
         }
         return dp[b.length()];
-    }
-
-    private Set<String> extractWords(String text) {
-        Set<String> words = new HashSet<>();
-        if (text == null || text.trim().isEmpty()) {
-            return words; // Retourne un set vide si le texte est vide
-        }
-        Scanner scanner = new Scanner(text.toLowerCase());
-        scanner.useDelimiter("[^\\p{L}]+");
-        while (scanner.hasNext()) {
-            String word = scanner.next().trim();
-            if (!word.isEmpty()) { // Ignore les chaînes vides
-                words.add(word);
-            }
-        }
-        scanner.close();
-        return words;
     }
 }

@@ -26,6 +26,7 @@ public class App extends Application {
             mainView.getLeftPanel(),
             mainView.getRightPanel()
         );
+        
         leftModel.addObserver(stats);
         rightModel.addObserver(stats);
 

@@ -18,6 +18,7 @@ public class TextController {
     public TextController(TextModel model, TextPanelView view) {
         model.setLoadStrategy(new LoadChapterStrategy());
 
+        // Récupère le bouton de chargement et initie les évènements
         view.getLoadBtn().setOnAction(e -> {
             File file = new FileChooser().showOpenDialog(null);
             if (file != null) {
@@ -27,7 +28,7 @@ public class TextController {
                 // Mettre à jour la ComboBox
                 view.getChapterSelect().getItems().setAll(chapters.keySet());
 
-                // Afficher le premier chapitre
+                // Afficher le premier chapitre par défaut
                 if (!chapters.isEmpty()) {
                     String firstChapter = chapters.keySet().iterator().next();
                     view.getChapterSelect().getSelectionModel().select(firstChapter);
@@ -37,19 +38,24 @@ public class TextController {
             }
         });
 
+        // Récupère le bouton d'édition et initie les évènements
         view.getEditBtn().setOnAction(e -> {
             boolean edition = view.getEditBtn().isSelected();
-            view.getTextArea().setEditable(edition);  // rend le champ modifiable (true) ou lecture seule (false):contentReference[oaicite:1]{index=1} 
+            view.getTextArea().setEditable(edition);  // rend le champ modifiable (true) ou lecture seule (false)
 
             if(edition) {
                 view.getEditBtn().setText("Enregistrer");
             } else {
                 view.getEditBtn().setText("Modifier");
+                // Lorsqu'on repasse à modifier, on veut que le nombre de mot en commun et la distance de Levenshtein soient recalculés
+                // Pour s'adapter aux modifications faites dans le TextArea
                 model.notifyObservers();
             }
         });
 
+        // Récupère le bouton d'édition et initie les évènements
         view.getSaveBtn().setOnAction(e -> {
+            // Si aucun fichier n'a été chargé, on ne peut rien sauvegarder.
             File currentFile = model.getCurrentFile();
             if (currentFile == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -100,7 +106,7 @@ public class TextController {
                     alert.setTitle("Sauvegarde réussie");
                     alert.setHeaderText(null);
                     alert.setContentText("Le fichier a été sauvegardé dans : " + saveFile.getAbsolutePath());
-                    alert.showAndWait();
+                    alert.showAndWait();// Récupère le bouton d'édition et initie les évènements
 
                 } catch (IOException ex) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -118,6 +124,7 @@ public class TextController {
             String selectedChapter = view.getChapterSelect().getValue();
             if (selectedChapter != null && !selectedChapter.isEmpty()) {
                 view.getTextArea().setText(model.getChapters().get(selectedChapter));
+                // Changement de chapitre -> On veut recalculer les statistiques (distance de Levenshtein et mots en commun)
                 model.notifyObservers();
             }
         });

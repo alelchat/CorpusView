@@ -22,6 +22,7 @@ public class TextPanelView extends VBox {
         textArea.setWrapText(true);
         textArea.setEditable(false);
         textArea.setStyle("-fx-font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimSun'; -fx-font-size: 14;");
+        // Permet de lire des textes d'autres langues n'utilisant pas notre alphabet comme le chinois ou le japonais
         getChildren().addAll(header, new ScrollPane(textArea));
     }
 
