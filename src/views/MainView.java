@@ -47,7 +47,7 @@ public class MainView extends BorderPane {
         menuBar.getMenus().add(helpMenu);
 
         header.getChildren().addAll(
-                new Label("UnknownVariable"),
+                new Label("Corpus Viewer"),
                 menuBar);
 
         // Footer
@@ -75,6 +75,8 @@ public class MainView extends BorderPane {
         TextArea content = new TextArea(String.join("\n", sortedWords));
         content.setEditable(false);
         content.setWrapText(true);
+        content.setStyle("-fx-font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimSun'; -fx-font-size: 14;");
+        
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setPrefSize(400, 300);

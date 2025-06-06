@@ -6,7 +6,7 @@
             "request": "launch",
             "mainClass": "App",
             "projectName": "ProjetJava2_d690b26c",
-            "vmArgs": "--module-path /home/alelchat/Documents/openjfx-21.0.7_linux-x64_bin-sdk/javafx-sdk-21.0.7/lib --add-modules javafx.controls"
+            "vmArgs": "--module-path ./openjdk/javafx-sdk-21.0.7/lib --add-modules javafx.controls"
         }
     ]
 }

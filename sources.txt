@@ -1,0 +1,10 @@
+src/controller/TextController.java
+src/utils/TextUtils.java
+src/App.java
+src/models/TextModel.java
+src/models/strategy/LoadStrategy.java
+src/models/strategy/LoadChapterStrategy.java
+src/observer/Observer.java
+src/views/MainView.java
+src/views/StatisticsDisplay.java
+src/views/TextPanelView.java
